@@ -10,7 +10,7 @@ with open('tokenizer.pkl', 'rb') as f:
 
 # Load the text generation model
 model = load_model('text_generation_model.h5')
-MAX_SEQUENCE_LENGTH = 20
+MAX_SEQUENCE_LENGTH = 100
 
 # Text generation function
 def generate_text(seed_text, max_words=50):
