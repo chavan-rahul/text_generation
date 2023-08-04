@@ -17,14 +17,29 @@ def generate_text(seed_text, max_words=50):
     generated_text = seed_text
     for _ in range(max_words):
         # Convert input text to sequence of token indices
-        input_sequence = tokenizer.texts_to_sequences([seed_text])[0]
-        input_sequence = pad_sequences([input_sequence], maxlen=MAX_SEQUENCE_LENGTH, padding='pre')
+        input_sequence = tokenizer.texts_to_sequences([seed_text])
+        input_sequence = pad_sequences(input_sequence, maxlen=MAX_SEQUENCE_LENGTH, padding='pre')
+    
+        predicted_probabilities = model.predict(input_sequence)
+        predicted_index = np.argmax(predicted_probabilities, axis=-1)
+    
+        # Convert the index to the predicted word using the tokenizer
+        predicted_word = tokenizer.index_word[predicted_index[0]]
+    
+
+
+
+
+
+        
+       # input_sequence = tokenizer.texts_to_sequences([seed_text])[0]
+       # input_sequence = pad_sequences([input_sequence], maxlen=MAX_SEQUENCE_LENGTH, padding='pre')
 
         # Predict the next token index using the model
-        predicted_index = model.predict_classes(input_sequence, verbose=0)
+        #predicted_index = model.predict_classes(input_sequence, verbose=0)
 
         # Convert token index to word and append to generated text
-        predicted_word = tokenizer.index_word[predicted_index[0]]
+       # predicted_word = tokenizer.index_word[predicted_index[0]]
         generated_text += ' ' + predicted_word
 
         # Update the seed_text for the next iteration
